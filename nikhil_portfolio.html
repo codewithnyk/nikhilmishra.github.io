@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nikhil Mishra | IT Support Engineer</title>
+  <meta name="description" content="Nikhil Mishra – IT Support Engineer with 5+ years of experience in ITSM, ServiceNow, Azure AD, Python, and Linux across enterprise environments." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+/* ============================================================
+   ROOT & RESET
+   ============================================================ */
+:root {
+  --bg:          #070d1a;
+  --bg-2:        #0b1528;
+  --bg-card:     #101e36;
+  --border:      rgba(59, 130, 246, 0.18);
+  --accent:      #3b82f6;
+  --accent-2:    #1d4ed8;
+  --accent-glow: rgba(59, 130, 246, 0.28);
+  --text:        #dce8f8;
+  --text-muted:  #5a7aa8;
+  --text-faint:  #1e3a60;
+  --green:       #22d3a0;
+  --gold:        #f59e0b;
+  --gradient:    linear-gradient(135deg, #1d4ed8, #3b82f6);
+  --radius:      12px;
+  --radius-lg:   20px;
+  --shadow:      0 8px 32px rgba(0,0,0,0.55);
+  --font:        'Inter', system-ui, sans-serif;
+  --mono:        'JetBrains Mono', 'Fira Code', monospace;
+  --nav-h:       64px;
+  --transition:  0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(rgba(59,130,246,0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a   { text-decoration: none; color: inherit; }
+ul  { list-style: none; }
+button { cursor: pointer; border: none; background: none; }
+
+/* ============================================================
+   NOISE OVERLAY
+   ============================================================ */
+.noise {
+  position: fixed; inset: 0; z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+.cursor {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--accent); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s, background 0.2s;
+}
+.cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1px solid var(--accent); border-radius: 50%;
+  pointer-events: none; z-index: 9997;
+  transform: translate(-50%,-50%);
+  transition: transform 0.15s ease, width 0.2s, height 0.2s, opacity 0.2s;
+  opacity: 0.5;
+}
+body.hovering .cursor-ring { width: 56px; height: 56px; opacity: 0.2; }
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 100px 0; position: relative; }
+.section-label {
+  font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.15em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 12px;
+}
+.section-heading {
+  font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.1;
+  margin-bottom: 48px; color: #fff;
+}
+.accent { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-h);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+.nav.scrolled {
+  background: rgba(7,13,26,0.94);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 1px 0 var(--border);
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto; padding: 0 24px;
+  height: 100%; display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { font-family: var(--mono); font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+.nav-logo .dot { color: var(--accent); }
+.nav-links { display: flex; gap: 8px; align-items: center; }
+.nav-links a {
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 0.9rem; font-weight: 500; color: var(--text-muted);
+  transition: color var(--transition), background var(--transition);
+}
+.nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.nav-links a.active { color: var(--accent) !important; }
+.nav-links .nav-cta {
+  background: var(--gradient); color: #fff !important;
+  padding: 7px 18px; border-radius: 8px;
+}
+.nav-links .nav-cta:hover { opacity: 0.88; }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: var(--transition); }
+.mobile-menu {
+  display: none; flex-direction: column;
+  background: rgba(7,13,26,0.97); backdrop-filter: blur(24px);
+  padding: 20px 24px; gap: 6px; border-bottom: 1px solid var(--border);
+}
+.mobile-menu a { padding: 10px 12px; border-radius: 8px; color: var(--text-muted); font-weight: 500; font-size: 1rem; transition: color var(--transition); }
+.mobile-menu a:hover { color: #fff; }
+.mobile-menu.open { display: flex; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative; min-height: 100dvh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; padding-top: var(--nav-h);
+}
+#heroCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+.hero-blob { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0; }
+.blob-1 {
+  width: 620px; height: 620px; left: -140px; top: 0;
+  background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 65%);
+  animation: blobPulse 14s ease-in-out infinite;
+}
+.blob-2 {
+  width: 500px; height: 500px; right: -100px; bottom: -60px;
+  background: radial-gradient(circle, rgba(29,78,216,0.1) 0%, transparent 65%);
+  animation: blobPulse 14s ease-in-out infinite reverse;
+  animation-delay: -7s;
+}
+@keyframes blobPulse {
+  0%,100% { transform: scale(1) translate(0,0); }
+  33%     { transform: scale(1.07) translate(20px,-15px); }
+  66%     { transform: scale(0.95) translate(-10px,20px); }
+}
+
+.hero-inner {
+  position: relative; z-index: 2;
+  max-width: 1100px; width: 100%;
+  display: flex; align-items: center;
+  gap: 64px; padding: 0 24px;
+}
+.hero-content { max-width: 600px; text-align: left; flex: 1; padding: 40px 0; }
+.hero-greeting { font-size: 1.1rem; margin-bottom: 12px; color: var(--text-muted); letter-spacing: 0.05em; }
+
+.hero-name { font-size: clamp(3rem, 7vw, 5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 24px; color: #fff; }
+
+.hero-typewriter { display: flex; align-items: center; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.tw-prefix { font-size: 1.2rem; color: var(--text-muted); }
+.tw-text { font-size: 1.2rem; font-weight: 700; color: var(--accent); font-family: var(--mono); }
+.tw-cursor { font-size: 1.3rem; color: var(--accent); animation: blink 1s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.hero-sub { font-size: 1rem; color: var(--text-muted); margin-bottom: 24px; }
+
+.pipeline-status {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(59,130,246,0.06); border: 1px solid var(--border);
+  border-radius: 30px; padding: 8px 18px;
+  font-size: 0.8rem; font-family: var(--mono); color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.ps-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 6px var(--green); animation: dotPulse 2s ease-in-out infinite;
+}
+.ps-dot.delay-1 { animation-delay: 0.66s; }
+.ps-dot.delay-2 { animation-delay: 1.33s; }
+@keyframes dotPulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+.ps-sep { color: var(--text-faint); }
+.ps-label { color: var(--text-muted); }
+
+.hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+.badge img { border-radius: 4px; }
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn {
+  padding: 12px 28px; border-radius: 10px; font-weight: 600;
+  font-size: 0.95rem; transition: all var(--transition); cursor: pointer; display: inline-block;
+}
+.btn-primary { background: var(--gradient); color: #fff; }
+.btn-primary:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.35); }
+.btn-ghost { border: 1px solid var(--border); color: var(--text); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+.hero-visual { position: relative; flex-shrink: 0; }
+.hero-photo-glow {
+  position: absolute; inset: -30px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 65%);
+  animation: blobPulse 8s ease-in-out infinite;
+}
+.hero-photo-outer {
+  position: relative; width: 300px; height: 300px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.hero-photo-spinner {
+  position: absolute; inset: -3px; border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--accent); border-right-color: var(--accent-2);
+  animation: spin 6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.hero-photo-inner {
+  width: 280px; height: 280px; border-radius: 50%;
+  overflow: hidden; border: 2px solid var(--border);
+  background: var(--bg-card);
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-photo-inner .initials {
+  font-size: 5rem; font-weight: 800; color: var(--accent);
+  font-family: var(--mono); letter-spacing: -0.05em; opacity: 0.85;
+}
+
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text-faint); font-size: 0.72rem; letter-spacing: 0.12em;
+  text-transform: uppercase; font-family: var(--mono);
+}
+.scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:1;transform:scaleY(1)} 50%{opacity:0.4;transform:scaleY(0.7)} }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about { background: var(--bg); }
+.about-grid { display: grid; grid-template-columns: 280px 1fr; gap: 64px; align-items: start; }
+
+.about-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.stat-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px 18px; text-align: center;
+  transition: border-color var(--transition);
+}
+.stat-card:hover { border-color: var(--accent); }
+.stat-card:first-child { grid-column: 1 / -1; }
+.stat-number { font-size: 2.2rem; font-weight: 800; color: #fff; font-family: var(--mono); }
+.stat-plus { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+.stat-label { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--mono); }
+
+.about-text h2 { margin-bottom: 20px; }
+.about-text p { color: var(--text-muted); font-size: 1rem; line-height: 1.8; margin-bottom: 20px; }
+.about-text p strong { color: var(--text); }
+
+.about-highlights { margin-bottom: 28px; }
+.about-highlights li {
+  color: var(--text-muted); font-size: 0.95rem; padding: 8px 0;
+  border-bottom: 1px solid rgba(59,130,246,0.07);
+  display: flex; align-items: center; gap: 10px;
+}
+.about-highlights li:last-child { border-bottom: none; }
+
+.about-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 500;
+  background: rgba(59,130,246,0.08); border: 1px solid var(--border);
+  color: var(--text-muted); transition: all var(--transition);
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(59,130,246,0.14); }
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+.skills { background: var(--bg-2); }
+
+.pipeline-run-bar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 20px;
+  font-family: var(--mono); font-size: 0.82rem; color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.prb-trigger { color: var(--green); font-size: 0.9rem; }
+.prb-name { color: var(--text); font-weight: 500; }
+.prb-sep { color: var(--text-faint); }
+.prb-branch { color: var(--accent); }
+.prb-run { color: var(--text-muted); }
+.prb-flex { flex: 1; }
+.prb-dur { color: var(--gold); }
+.prb-status { color: var(--green); font-weight: 600; }
+
+.pipeline-scroll { overflow-x: auto; padding-bottom: 16px; }
+.pipeline-track {
+  display: flex; gap: 0; align-items: stretch;
+  min-width: max-content;
+}
+
+.pl-stage {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-right: none; padding: 22px 24px; min-width: 200px;
+  position: relative; opacity: 0; transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+}
+.pl-stage:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+.pl-stage:last-child  { border-right: 1px solid var(--border); border-radius: 0 var(--radius) var(--radius) 0; }
+.pl-stage.visible { opacity: 1; transform: translateY(0); }
+.pl-stage:hover { border-color: var(--accent); z-index: 1; }
+.pl-stage::after {
+  content: '▶'; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
+  color: var(--accent); font-size: 0.75rem; z-index: 2; background: var(--bg-2);
+  padding: 2px 1px;
+}
+.pl-stage:last-child::after { display: none; }
+
+.pl-stage-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.pl-num { font-family: var(--mono); font-size: 0.65rem; color: var(--text-faint); }
+.pl-icon { font-size: 1rem; }
+.pl-name { font-size: 0.8rem; font-weight: 700; font-family: var(--mono); color: #fff; letter-spacing: 0.06em; flex: 1; }
+.pl-pass { color: var(--green); font-size: 0.8rem; }
+.pl-stage-sub { font-size: 0.72rem; color: var(--text-faint); font-family: var(--mono); margin-bottom: 14px; }
+
+.pl-jobs { display: flex; flex-direction: column; gap: 8px; }
+.pl-job { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); }
+.pl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.pl-dot.expert       { background: var(--green); }
+.pl-dot.advanced     { background: var(--accent); }
+.pl-dot.intermediate { background: var(--gold); }
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+.experience { background: var(--bg-2); }
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+  width: 2px; background: linear-gradient(to bottom, var(--accent), transparent);
+  border-radius: 2px;
+}
+.timeline-item {
+  position: relative; margin-bottom: 48px;
+  opacity: 0; transform: translateX(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.timeline-item.visible { opacity: 1; transform: translateX(0); }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot {
+  position: absolute; left: -30px; top: 20px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow); z-index: 1;
+}
+.timeline-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 28px 28px 24px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.timeline-card:hover { border-color: var(--accent); box-shadow: 0 4px 32px rgba(59,130,246,0.08); }
+.timeline-meta {
+  display: flex; flex-wrap: wrap; justify-content: space-between;
+  align-items: center; gap: 6px; margin-bottom: 6px;
+}
+.timeline-company { font-size: 0.82rem; font-weight: 600; font-family: var(--mono); color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase; }
+.timeline-period   { font-size: 0.78rem; color: var(--text-faint); font-family: var(--mono); }
+.timeline-role     { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.timeline-location { font-size: 0.82rem; color: var(--text-faint); display: block; margin-bottom: 16px; }
+.timeline-bullets  { list-style: disc; padding-left: 18px; margin-bottom: 16px; }
+.timeline-bullets li { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 8px; line-height: 1.6; }
+.timeline-bullets li strong { color: var(--text); }
+.timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.timeline-tags span {
+  padding: 3px 10px; border-radius: 4px;
+  background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.22);
+  font-size: 0.76rem; font-family: var(--mono); color: var(--accent);
+}
+
+/* ============================================================
+   CERTIFICATIONS
+   ============================================================ */
+.certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.cert-card {
+  display: flex; align-items: flex-start; gap: 18px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 24px;
+  position: relative; overflow: hidden;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s;
+}
+.cert-card.visible { opacity: 1; transform: translateY(0); }
+.cert-card:hover { border-color: var(--accent); box-shadow: 0 4px 32px rgba(59,130,246,0.1); }
+.cert-card::before {
+  content: ''; position: absolute; top: -2px; left: -2px; right: -2px; height: 3px;
+  background: var(--gradient); border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  opacity: 0; transition: opacity var(--transition);
+}
+.cert-card:hover::before { opacity: 1; }
+
+.cert-logo {
+  width: 48px; height: 48px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-size: 1.5rem;
+}
+.cert-logo.itsm    { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.25); }
+.cert-logo.docker  { background: rgba(36,150,237,0.12); border: 1px solid rgba(36,150,237,0.25); }
+.cert-logo.python  { background: rgba(255,212,59,0.1);  border: 1px solid rgba(255,212,59,0.25); }
+
+.cert-info h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+.cert-info p  { font-size: 0.85rem; color: var(--text-muted); }
+.cert-issuer  { font-size: 0.75rem; color: var(--text-faint); font-family: var(--mono); }
+
+.cert-badge {
+  position: absolute; top: 16px; right: 16px;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  font-family: var(--mono); letter-spacing: 0.05em;
+}
+.cert-badge.itsm   { background: rgba(59,130,246,0.1);  color: var(--accent); border: 1px solid rgba(59,130,246,0.3); }
+.cert-badge.docker { background: rgba(36,150,237,0.1);  color: #2496ed;       border: 1px solid rgba(36,150,237,0.3); }
+.cert-badge.python { background: rgba(255,212,59,0.1);  color: var(--gold);   border: 1px solid rgba(255,212,59,0.3); }
+.cert-badge.award  { background: rgba(34,211,160,0.1);  color: var(--green);  border: 1px solid rgba(34,211,160,0.3); }
+
+/* ============================================================
+   EDUCATION
+   ============================================================ */
+.education { background: var(--bg-2); }
+.edu-grid { display: flex; flex-direction: column; gap: 20px; max-width: 680px; }
+.edu-card {
+  display: flex; align-items: flex-start; gap: 24px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 32px;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+}
+.edu-card.visible { opacity: 1; transform: translateY(0); }
+.edu-card:hover { border-color: var(--accent); }
+.edu-icon { font-size: 2.2rem; line-height: 1; flex-shrink: 0; }
+.edu-info h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.edu-field   { font-size: 0.95rem; color: var(--accent); margin-bottom: 4px; }
+.edu-college { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px; }
+.edu-period  { font-size: 0.8rem; color: var(--text-faint); font-family: var(--mono); }
+.edu-badge   { display: inline-block; margin-top: 10px; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-family: var(--mono); font-weight: 600; text-transform: uppercase; background: rgba(34,211,160,0.1); color: var(--green); border: 1px solid rgba(34,211,160,0.25); }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-intro {
+  color: var(--text-muted); font-size: 1.05rem; max-width: 540px;
+  margin-bottom: 40px; line-height: 1.75;
+}
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.contact-card {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px 22px;
+  transition: all var(--transition);
+}
+.contact-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(59,130,246,0.1); }
+.contact-card.info-card { pointer-events: none; }
+.contact-icon { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+.contact-card h4 { font-size: 0.78rem; color: var(--text-faint); font-weight: 500; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+.contact-card p  { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer { padding: 32px 24px; text-align: center; border-top: 1px solid var(--border); background: var(--bg-2); }
+.footer p { font-size: 0.88rem; color: var(--text-faint); }
+.footer .footer-sub { margin-top: 4px; font-size: 0.78rem; }
+.footer strong { color: var(--accent); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .hero-inner { flex-direction: column-reverse; text-align: center; gap: 36px; padding-top: 20px; }
+  .hero-content { text-align: center; max-width: 100%; padding: 0; }
+  .hero-badges, .hero-actions { justify-content: center; }
+  .hero-photo-outer { width: 240px; height: 240px; }
+  .hero-photo-inner { width: 224px; height: 224px; }
+  .about-grid { grid-template-columns: 1fr; gap: 24px; }
+  .about-stats { grid-template-columns: repeat(3, 1fr); }
+  .about-stats .stat-card:first-child { grid-column: auto; }
+  .pipeline-status { justify-content: center; }
+  .hero-typewriter { justify-content: center; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .certs-grid { grid-template-columns: 1fr; }
+  .timeline { padding-left: 16px; }
+  .timeline-dot { left: -22px; }
+  .timeline-card { padding: 20px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .section { padding: 70px 0; }
+}
+@media (max-width: 480px) {
+  .hero-photo-outer { width: 200px; height: 200px; }
+  .hero-photo-inner { width: 186px; height: 186px; }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+}
+  </style>
+</head>
+<body>
+
+  <div class="noise"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">NM<span class="dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact" class="nav-cta">Contact Me</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact Me</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-blob blob-1"></div>
+    <div class="hero-blob blob-2"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <p class="hero-greeting">Hello, World! 👋</p>
+        <h1 class="hero-name">Nikhil <span class="accent">Mishra</span></h1>
+        <div class="hero-typewriter">
+          <span class="tw-prefix">I am an </span>
+          <span class="tw-text" id="typewriter"></span>
+          <span class="tw-cursor">|</span>
+        </div>
+        <p class="hero-sub">5+ years in enterprise IT support · Erlangen, Germany</p>
+        <div class="pipeline-status">
+          <span class="ps-dot"></span><span class="ps-label">Incident Management</span>
+          <span class="ps-sep">/</span>
+          <span class="ps-dot delay-1"></span><span class="ps-label">ITSM</span>
+          <span class="ps-sep">/</span>
+          <span class="ps-dot delay-2"></span><span class="ps-label">ServiceNow</span>
+        </div>
+        <div class="hero-badges">
+          <span class="badge"><img src="https://img.shields.io/badge/ServiceNow-Expert-1ACE5B?logo=servicenow&logoColor=white&style=flat-square" alt="ServiceNow" /></span>
+          <span class="badge"><img src="https://img.shields.io/badge/Azure_AD-Identity_%26_Access-0078D4?logo=microsoftazure&logoColor=white&style=flat-square" alt="Azure AD" /></span>
+          <span class="badge"><img src="https://img.shields.io/badge/Python-Automation-3776AB?logo=python&logoColor=white&style=flat-square" alt="Python" /></span>
+        </div>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Get In Touch</a>
+          <a href="#experience" class="btn btn-ghost">View Experience</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-photo-glow"></div>
+        <div class="hero-photo-outer">
+          <div class="hero-photo-spinner"></div>
+          <div class="hero-photo-inner">
+            <!-- Replace the line below with: <img src="your-photo.jpg" alt="Nikhil Mishra" style="width:100%;height:100%;object-fit:cover;" /> -->
+            <span class="initials">NM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="section-label">01 — About Me</div>
+      <div class="about-grid">
+        <div class="about-visual">
+          <div class="about-stats">
+            <div class="stat-card">
+              <span class="stat-number" data-target="5">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number" data-target="5">0</span>
+              <span class="stat-label">Certifications</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number" data-target="15">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">Tools Mastered</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-text">
+          <h2 class="section-heading">Enterprise IT Support <span class="accent">That Delivers</span></h2>
+          <p>IT Support Engineer with 5+ years of experience delivering Level 1 and Level 2 support in enterprise environments. Skilled in incident management, troubleshooting, and user support using tools such as <strong>ServiceNow</strong> and <strong>Jira</strong>, with exposure to Windows, Linux, and Microsoft 365 environments. Focused on reliable service delivery, root cause analysis, and improving operational efficiency.</p>
+          <p>Currently at <strong>Makersite GmbH</strong> in Germany, I provide technical support and automate data workflows using Python. I won <strong>1st place at Hack4Good 2025</strong>, building a ServiceNow Virtual Agent chatbot for a non-profit.</p>
+          <ul class="about-highlights">
+            <li>🔧 ITSM — ServiceNow, Jira, Confluence (Incident, Change, Problem)</li>
+            <li>☁️ Cloud &amp; Identity — Azure AD / Entra ID, Microsoft 365, Intune</li>
+            <li>🐧 Infrastructure — Linux Administration, Windows Server, VMware</li>
+            <li>🐍 Scripting — Python (pandas, openpyxl), Bash, SQL</li>
+            <li>📊 Monitoring — Grafana, Splunk, Log Analysis</li>
+            <li>🌍 Languages — English (C2), German (B1), Hindi (Native)</li>
+          </ul>
+          <div class="about-links">
+            <a href="mailto:emailtonikhilmishra@gmail.com" class="chip">✉ emailtonikhilmishra@gmail.com</a>
+            <a href="https://www.linkedin.com/in/nikhil--mishra" target="_blank" rel="noopener noreferrer" class="chip">💼 LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section class="section skills" id="skills">
+    <div class="container">
+      <div class="section-label">02 — Skills &amp; Tools</div>
+      <h2 class="section-heading">My <span class="accent">Tech Stack</span></h2>
+
+      <div class="pipeline-run-bar">
+        <span class="prb-trigger">&#9654;</span>
+        <span class="prb-name">nikhil-itsm-stack</span>
+        <span class="prb-sep">·</span>
+        <span class="prb-branch">&#9135; main</span>
+        <span class="prb-sep">·</span>
+        <span class="prb-run">Run #512</span>
+        <span class="prb-flex"></span>
+        <span class="prb-dur">&#9201; 5 yrs</span>
+        <span class="prb-status">&#10003; All Stages Passed</span>
+      </div>
+
+      <div class="pipeline-scroll">
+        <div class="pipeline-track">
+
+          <div class="pl-stage" data-delay="0">
+            <div class="pl-stage-head">
+              <span class="pl-num">01</span>
+              <span class="pl-icon">🎫</span>
+              <span class="pl-name">ITSM</span>
+              <span class="pl-pass">✓</span>
+            </div>
+            <div class="pl-stage-sub">Service Management Tools</div>
+            <div class="pl-jobs">
+              <div class="pl-job"><span class="pl-dot expert"></span><span>ServiceNow</span></div>
+              <div class="pl-job"><span class="pl-dot expert"></span><span>Jira</span></div>
+              <div class="pl-job"><span class="pl-dot advanced"></span><span>Confluence</span></div>
+              <div class="pl-job"><span class="pl-dot intermediate"></span><span>Service Desk Plus</span></div>
+            </div>
+          </div>
+
+          <div class="pl-stage" data-delay="100">
+            <div class="pl-stage-head">
+              <span class="pl-num">02</span>
+              <span class="pl-icon">☁️</span>
+              <span class="pl-name">CLOUD</span>
+              <span class="pl-pass">✓</span>
+            </div>
+            <div class="pl-stage-sub">Identity &amp; Access</div>
+            <div class="pl-jobs">
+              <div class="pl-job"><span class="pl-dot expert"></span><span>Azure AD / Entra ID</span></div>
+              <div class="pl-job"><span class="pl-dot advanced"></span><span>Microsoft 365</span></div>
+              <div class="pl-job"><span class="pl-dot intermediate"></span><span>Intune</span></div>
+              <div class="pl-job"><span class="pl-dot intermediate"></span><span>Windows Server</span></div>
+            </div>
+          </div>
+
+          <div class="pl-stage" data-delay="200">
+            <div class="pl-stage-head">
+              <span class="pl-num">03</span>
+              <span class="pl-icon">🐧</span>
+              <span class="pl-name">INFRA</span>
+              <span class="pl-pass">✓</span>
+            </div>
+            <div class="pl-stage-sub">OS &amp; Virtualization</div>
+            <div class="pl-jobs">
+              <div class="pl-job"><span class="pl-dot expert"></span><span>Linux Admin</span></div>
+              <div class="pl-job"><span class="pl-dot advanced"></span><span>VMware / VirtualBox</span></div>
+              <div class="pl-job"><span class="pl-dot advanced"></span><span>TCP/IP, DNS, DHCP</span></div>
+              <div class="pl-job"><span class="pl-dot intermediate"></span><span>Firewall / Routing</span></div>
+            </div>
+          </div>
+
+          <div class="pl-stage" data-delay="300">
+            <div class="pl-stage-head">
+              <span class="pl-num">04</span>
+              <span class="pl-icon">🐍</span>
+              <span class="pl-name">SCRIPTING</span>
+              <span class="pl-pass">✓</span>
+            </div>
+            <div class="pl-stage-sub">Automation &amp; Data</div>
+            <div class="pl-jobs">
+              <div class="pl-job"><span class="pl-dot expert"></span><span>Python</span></div>
+              <div class="pl-job"><span class="pl-dot expert"></span><span>Bash</span></div>
+              <div class="pl-job"><span class="pl-dot advanced"></span><span>SQL</span></div>
+              <div class="pl-job"><span class="pl-dot intermediate"></span><span>JavaScript</span></div>
+            </div>
+          </div>
+
+          <div class="pl-stage" data-delay="400">
+            <div class="pl-stage-head">
+              <span class="pl-num">05</span>
+              <span class="pl-icon">📊</span>
+              <span class="pl-name">MONITORING</span>
+              <span class="pl-pass">✓</span>
+            </div>
+            <div class="pl-stage-sub">Observability &amp; Logs</div>
+            <div class="pl-jobs">
+              <div class="pl-job"><span class="pl-dot expert"></span><span>Grafana</span></div>
+              <div class="pl-job"><span class="pl-dot advanced"></span><span>Splunk</span></div>
+              <div class="pl-job"><span class="pl-dot advanced"></span><span>Log Analysis</span></div>
+              <div class="pl-job"><span class="pl-dot intermediate"></span><span>SharePoint</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE ===== -->
+  <section class="section experience" id="experience">
+    <div class="container">
+      <div class="section-label">03 — Work Experience</div>
+      <h2 class="section-heading">Professional <span class="accent">Journey</span></h2>
+      <div class="timeline">
+
+        <!-- Makersite -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="timeline-company">Makersite GmbH</span>
+              <span class="timeline-period">Dec 2025 – Present · Werkstudent</span>
+            </div>
+            <h3 class="timeline-role">IT Support – Data Services</h3>
+            <span class="timeline-location">📍 Germany (Remote)</span>
+            <ul class="timeline-bullets">
+              <li>Performing data analysis, cleaning, and validation using <strong>Python (pandas, openpyxl)</strong> and Excel; automated data processing and reporting to reduce manual effort and errors.</li>
+              <li>Providing first-level IT support by troubleshooting Python scripts, Excel workflows, and data inconsistencies.</li>
+              <li>Logging, tracking, and resolving incidents, tasks, and change requests using <strong>JIRA</strong>, including root cause analysis for recurring issues.</li>
+              <li>Creating and maintaining technical documentation and process guides for knowledge sharing.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>Python</span><span>Jira</span><span>Data Analysis</span><span>ITSM</span><span>Documentation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Körber -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="timeline-company">Körber Supply Chain</span>
+              <span class="timeline-period">Apr 2024 – Sep 2025 · 1 yr 6 mos</span>
+            </div>
+            <h3 class="timeline-role">IT Support – ITSM</h3>
+            <span class="timeline-location">📍 Nuremberg, Bavaria, Germany</span>
+            <ul class="timeline-bullets">
+              <li>Managed <strong>ServiceNow</strong> modules (Incident, Change, Problem, Service Request) to streamline workflows and reduce downtime.</li>
+              <li>Experienced in <strong>Azure AD / Microsoft Entra ID</strong> — user authentication, log analysis, provisioning, and SSO integration with ServiceNow.</li>
+              <li>Developed automated testing with <strong>ATF</strong>, reducing manual effort by <strong>50%</strong> for patch and upgrade validation.</li>
+              <li>Maintained and monitored upgrades during maintenance windows, reducing team effort by <strong>40%</strong>.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>ServiceNow</span><span>Azure AD</span><span>ITIL</span><span>ATF</span><span>JavaScript</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Intelizign -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="timeline-company">Intelizign</span>
+              <span class="timeline-period">May 2023 – Mar 2024 · 11 mos</span>
+            </div>
+            <h3 class="timeline-role">IT / Application Support</h3>
+            <span class="timeline-location">📍 Nuremberg, Bavaria, Germany</span>
+            <ul class="timeline-bullets">
+              <li>Assisted in implementing a workflow monitoring solution for <strong>Siemens Teamcenter (PLM)</strong> using Python and SQL-based ETL pipelines.</li>
+              <li>Used <strong>Grafana</strong> for visualization of logs, resource usage, and alerts across Linux servers.</li>
+              <li>Monitored web application status and logs on Linux servers, performing basic administration tasks.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>Python</span><span>SQL</span><span>Grafana</span><span>Linux</span><span>ETL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Memmert -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="timeline-company">Memmert GmbH + Co. KG</span>
+              <span class="timeline-period">Jul 2022 – Nov 2022 · 5 mos</span>
+            </div>
+            <h3 class="timeline-role">IT Support (L2)</h3>
+            <span class="timeline-location">📍 Schwabach, Bavaria, Germany</span>
+            <ul class="timeline-bullets">
+              <li>Provided Level 2 support for the <strong>proAlpha ERP</strong> system via Service Desk Plus — managing queries and error resolution.</li>
+              <li>Administered user permissions in proAlpha using <strong>Azure AD</strong> for secure access management.</li>
+              <li>Maintained and updated the ERP dashboard for accurate operational decision-making.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>ERP</span><span>Azure AD</span><span>L2 Support</span><span>Service Desk Plus</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Capgemini -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="timeline-company">Capgemini</span>
+              <span class="timeline-period">Jan 2019 – May 2022 · 3 yrs 5 mos</span>
+            </div>
+            <h3 class="timeline-role">Senior Software Engineer – IT Support</h3>
+            <span class="timeline-location">📍 Pune, Maharashtra, India</span>
+            <ul class="timeline-bullets">
+              <li>Delivered 24/7 Level 1 &amp; 2 support using <strong>ServiceNow ITSM</strong> in full compliance with ITIL guidelines.</li>
+              <li>Deployed hotfixes and security patches on <strong>Linux servers</strong>; monitored application logs on Windows using <strong>Splunk</strong>.</li>
+              <li>Developed <strong>Bash scripts</strong> for automated log monitoring, reducing manual effort by approximately <strong>40%</strong>.</li>
+              <li>Recognised with the <strong>Customer Satisfaction Award</strong> for outstanding support and proactive issue resolution.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>ServiceNow</span><span>Linux</span><span>Splunk</span><span>Bash</span><span>ITIL</span><span>VMware</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CERTIFICATIONS & AWARDS ===== -->
+  <section class="section certifications" id="certifications">
+    <div class="container">
+      <div class="section-label">04 — Certifications &amp; Awards</div>
+      <h2 class="section-heading">Credentials &amp; <span class="accent">Recognition</span></h2>
+      <div class="certs-grid">
+
+        <div class="cert-card" data-delay="0">
+          <div class="cert-logo itsm">🖥️</div>
+          <div class="cert-info">
+            <h3>IT Service Desk</h3>
+            <p>Monitoring and Metrics Fundamentals</p>
+            <span class="cert-issuer">LinkedIn Learning</span>
+          </div>
+          <div class="cert-badge itsm">ITSM</div>
+        </div>
+
+        <div class="cert-card" data-delay="100">
+          <div class="cert-logo docker">🐳</div>
+          <div class="cert-info">
+            <h3>Docker Foundations</h3>
+            <p>Professional Certificate</p>
+            <span class="cert-issuer">Docker Inc.</span>
+          </div>
+          <div class="cert-badge docker">Foundations</div>
+        </div>
+
+        <div class="cert-card" data-delay="200">
+          <div class="cert-logo python">🐍</div>
+          <div class="cert-info">
+            <h3>Programming Using Python</h3>
+            <p>Introduction to Programming</p>
+            <span class="cert-issuer">Microsoft</span>
+          </div>
+          <div class="cert-badge python">Python</div>
+        </div>
+
+        <div class="cert-card" data-delay="300">
+          <div class="cert-logo itsm">⚙️</div>
+          <div class="cert-info">
+            <h3>IT Service Desk</h3>
+            <p>Service Management</p>
+            <span class="cert-issuer">LinkedIn Learning</span>
+          </div>
+          <div class="cert-badge itsm">ITSM</div>
+        </div>
+
+        <div class="cert-card" data-delay="400">
+          <div class="cert-logo itsm">🔍</div>
+          <div class="cert-info">
+            <h3>IT Service Management Foundations</h3>
+            <p>Problem Management</p>
+            <span class="cert-issuer">LinkedIn Learning</span>
+          </div>
+          <div class="cert-badge itsm">ITSM</div>
+        </div>
+
+        <div class="cert-card" data-delay="500">
+          <div class="cert-logo python">🏆</div>
+          <div class="cert-info">
+            <h3>Hack4Good — 1st Place</h3>
+            <p>Built a ServiceNow Virtual Agent chatbot for a non-profit</p>
+            <span class="cert-issuer">Hack4Good · July 2025</span>
+          </div>
+          <div class="cert-badge award">Award</div>
+        </div>
+
+        <div class="cert-card" data-delay="600">
+          <div class="cert-logo itsm">⭐</div>
+          <div class="cert-info">
+            <h3>Customer Satisfaction Award</h3>
+            <p>Outstanding service and proactive issue resolution</p>
+            <span class="cert-issuer">Capgemini</span>
+          </div>
+          <div class="cert-badge award">Award</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EDUCATION ===== -->
+  <section class="section education" id="education">
+    <div class="container">
+      <div class="section-label">05 — Education</div>
+      <h2 class="section-heading">Academic <span class="accent">Background</span></h2>
+      <div class="edu-grid">
+
+        <div class="edu-card">
+          <div class="edu-icon">🎓</div>
+          <div class="edu-info">
+            <h3>Master of Science — Data Science</h3>
+            <p class="edu-field">Data Science</p>
+            <p class="edu-college">FAU Erlangen-Nürnberg</p>
+            <span class="edu-period">2022 – Present</span>
+            <span class="edu-badge">Ongoing</span>
+          </div>
+        </div>
+
+        <div class="edu-card">
+          <div class="edu-icon">🎓</div>
+          <div class="edu-info">
+            <h3>Bachelor of Technology — Computer Science</h3>
+            <p class="edu-field">Computer Science &amp; Engineering</p>
+            <p class="edu-college">Hooghly Engineering and Technology College</p>
+            <span class="edu-period">2014 – 2018</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="section-label">06 — Contact</div>
+      <h2 class="section-heading">Let's <span class="accent">Connect</span></h2>
+      <p class="contact-intro">Open to full-time IT operations, system administration, or IT support roles in Germany. Authorised to work full-time and available immediately.</p>
+      <div class="contact-grid">
+        <a href="mailto:emailtonikhilmishra@gmail.com" class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>Email</h4>
+            <p>emailtonikhilmishra@gmail.com</p>
+          </div>
+        </a>
+        <!-- PHONE: Replace +49-XXXXXXXXXX with your actual number -->
+        <a href="tel:+49-1624770363" class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p>+49 162 4770363</p>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/nikhil--mishra" target="_blank" rel="noopener noreferrer" class="contact-card">
+          <div class="contact-icon">💼</div>
+          <div>
+            <h4>LinkedIn</h4>
+            <p>nikhil--mishra</p>
+          </div>
+        </a>
+        <div class="contact-card info-card">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Location</h4>
+            <p>Erlangen, Bavaria, Germany</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <p>Designed &amp; built with ❤ by <strong>Nikhil Mishra</strong></p>
+      <p class="footer-sub">© 2026 · All rights reserved</p>
+    </div>
+  </footer>
+
+  <script>
+"use strict";
+
+// ==================== CURSOR ====================
+const cursor     = document.getElementById("cursor");
+const cursorRing = document.getElementById("cursorRing");
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+if (window.matchMedia("(pointer: fine)").matches) {
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + "px";
+    cursor.style.top  = mouseY + "px";
+  });
+  (function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    cursorRing.style.left = ringX + "px";
+    cursorRing.style.top  = ringY + "px";
+    requestAnimationFrame(animateRing);
+  })();
+  document.querySelectorAll("a, button, .pl-stage, .cert-card, .contact-card").forEach(el => {
+    el.addEventListener("mouseenter", () => document.body.classList.add("hovering"));
+    el.addEventListener("mouseleave", () => document.body.classList.remove("hovering"));
+  });
+} else {
+  cursor.style.display = "none";
+  cursorRing.style.display = "none";
+}
+
+// ==================== NAV SCROLL ====================
+const nav = document.getElementById("nav");
+window.addEventListener("scroll", () => {
+  nav.classList.toggle("scrolled", window.scrollY > 20);
+}, { passive: true });
+
+// ==================== HAMBURGER ====================
+const hamburger  = document.getElementById("hamburger");
+const mobileMenu = document.getElementById("mobileMenu");
+hamburger.addEventListener("click", () => {
+  const open = mobileMenu.classList.toggle("open");
+  hamburger.setAttribute("aria-expanded", open);
+  const spans = hamburger.querySelectorAll("span");
+  if (open) {
+    spans[0].style.transform = "rotate(45deg) translate(5px, 5px)";
+    spans[1].style.opacity   = "0";
+    spans[2].style.transform = "rotate(-45deg) translate(5px, -5px)";
+  } else {
+    spans.forEach(s => { s.style.transform = ""; s.style.opacity = ""; });
+  }
+});
+mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+  mobileMenu.classList.remove("open");
+  hamburger.querySelectorAll("span").forEach(s => { s.style.transform = ""; s.style.opacity = ""; });
+}));
+
+// ==================== HERO CANVAS (IT TOOLS NETWORK) ====================
+(function initCanvas() {
+  const canvas = document.getElementById("heroCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let W, H, nodes = [], packets = [], frameCount = 0;
+
+  const NODE_DEFS = [
+    { label: "ServiceNow", color: "#1ACE5B", size: 22 },
+    { label: "Azure AD",   color: "#0078D4", size: 20 },
+    { label: "Jira",       color: "#0052CC", size: 18 },
+    { label: "Python",     color: "#3776AB", size: 18 },
+    { label: "Linux",      color: "#f0ab00", size: 17 },
+    { label: "Windows",    color: "#0078D4", size: 16 },
+    { label: "M365",       color: "#D83B01", size: 16 },
+    { label: "Grafana",    color: "#F46800", size: 15 },
+    { label: "Confluence", color: "#172B4D", size: 15 },
+    { label: "Splunk",     color: "#65A637", size: 15 },
+    { label: "Bash",       color: "#4EAA25", size: 14 },
+    { label: "SQL",        color: "#3b82f6", size: 14 },
+    { label: "Intune",     color: "#0078D4", size: 14 },
+    { label: "VMware",     color: "#607078", size: 14 },
+  ];
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener("resize", () => { resize(); init(); }, { passive: true });
+
+  class InfraNode {
+    constructor(def) {
+      this.label = def.label; this.color = def.color; this.size = def.size;
+      this.x  = 80 + Math.random() * (W - 160);
+      this.y  = 60 + Math.random() * (H - 120);
+      this.vx = (Math.random() - 0.5) * 0.26;
+      this.vy = (Math.random() - 0.5) * 0.26;
+      this.pulse = Math.random() * Math.PI * 2;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      const m = 80;
+      if (this.x < m || this.x > W - m) this.vx *= -1;
+      if (this.y < m || this.y > H - m) this.vy *= -1;
+      this.pulse += 0.02;
+    }
+    draw() {
+      const ps = 1 + Math.sin(this.pulse) * 0.1;
+      const r  = this.size * ps;
+      ctx.beginPath(); ctx.arc(this.x, this.y, r + 10, 0, Math.PI * 2);
+      ctx.fillStyle = this.color; ctx.globalAlpha = 0.05 + Math.abs(Math.sin(this.pulse)) * 0.04; ctx.fill();
+      ctx.beginPath(); ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = this.color; ctx.globalAlpha = 0.13; ctx.fill();
+      ctx.beginPath(); ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+      ctx.strokeStyle = this.color; ctx.globalAlpha = 0.5; ctx.lineWidth = 1.5; ctx.stroke();
+      const fs = Math.max(8, this.size * 0.56);
+      ctx.font = `600 ${fs}px 'JetBrains Mono', monospace`;
+      ctx.fillStyle = "#dce8f8"; ctx.globalAlpha = 0.7;
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(this.label, this.x, this.y);
+    }
+  }
+
+  class DataPacket {
+    constructor(from, to) {
+      this.from = from; this.to = to; this.t = 0;
+      this.speed = 0.003 + Math.random() * 0.003;
+      this.color = from.color; this.r = 1.8 + Math.random() * 1.2;
+    }
+    update() { this.t += this.speed; return this.t >= 1; }
+    draw() {
+      const x = this.from.x + (this.to.x - this.from.x) * this.t;
+      const y = this.from.y + (this.to.y - this.from.y) * this.t;
+      ctx.beginPath(); ctx.arc(x, y, this.r + 4, 0, Math.PI * 2);
+      ctx.fillStyle = this.color; ctx.globalAlpha = 0.12; ctx.fill();
+      ctx.beginPath(); ctx.arc(x, y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = this.color; ctx.globalAlpha = 0.9; ctx.fill();
+    }
+  }
+
+  function init() {
+    const count = Math.min(NODE_DEFS.length, Math.max(7, Math.floor((W * H) / 38000) + 5));
+    nodes = NODE_DEFS.slice(0, count).map(def => new InfraNode(def));
+    packets = [];
+  }
+
+  function drawConnections() {
+    const threshold = Math.min(W, H) * 0.42;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < threshold) {
+          const alpha = (1 - dist / threshold) * 0.18;
+          ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = "#3b82f6"; ctx.globalAlpha = alpha; ctx.lineWidth = 0.8;
+          ctx.setLineDash([5, 9]); ctx.stroke(); ctx.setLineDash([]);
+          if (frameCount % 100 === 0 && Math.random() < 0.22 && packets.length < 28) {
+            const flip = Math.random() > 0.5;
+            packets.push(new DataPacket(flip ? nodes[i] : nodes[j], flip ? nodes[j] : nodes[i]));
+          }
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H); ctx.globalAlpha = 1; frameCount++;
+    drawConnections();
+    packets = packets.filter(p => { const done = p.update(); if (!done) p.draw(); return !done; });
+    nodes.forEach(n => { n.update(); n.draw(); });
+    requestAnimationFrame(animate);
+  }
+
+  init(); animate();
+})();
+
+// ==================== TYPEWRITER ====================
+(function typewriter() {
+  const el = document.getElementById("typewriter");
+  if (!el) return;
+  const words = [
+    "IT Support Engineer",
+    "ITSM Specialist",
+    "ServiceNow Expert",
+    "Azure AD Administrator",
+    "Python Automation Engineer",
+    "L1 / L2 Support Professional",
+  ];
+  let wi = 0, ci = 0, deleting = false;
+  function tick() {
+    const word = words[wi];
+    if (!deleting) {
+      el.textContent = word.slice(0, ++ci);
+      if (ci === word.length) { deleting = true; return setTimeout(tick, 2200); }
+      setTimeout(tick, 60);
+    } else {
+      el.textContent = word.slice(0, --ci);
+      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; return setTimeout(tick, 400); }
+      setTimeout(tick, 32);
+    }
+  }
+  setTimeout(tick, 800);
+})();
+
+// ==================== COUNTER ANIMATION ====================
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const step = target / (1400 / 16);
+  let current = 0;
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = Math.floor(current);
+    if (current >= target) clearInterval(timer);
+  }, 16);
+}
+
+// ==================== INTERSECTION OBSERVER ====================
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    if (el.classList.contains("pl-stage")) {
+      const delay = parseInt(el.dataset.delay || 0, 10);
+      setTimeout(() => el.classList.add("visible"), delay);
+    }
+    if (el.classList.contains("timeline-item")) el.classList.add("visible");
+    if (el.classList.contains("cert-card")) {
+      const delay = parseInt(el.dataset.delay || 0, 10);
+      setTimeout(() => el.classList.add("visible"), delay);
+    }
+    if (el.classList.contains("edu-card")) el.classList.add("visible");
+    if (el.classList.contains("stat-number")) animateCounter(el);
+    io.unobserve(el);
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll(".pl-stage, .timeline-item, .cert-card, .edu-card, .stat-number").forEach(el => io.observe(el));
+
+// ==================== ACTIVE NAV LINKS ====================
+const sections = document.querySelectorAll("section[id]");
+const navLinks  = document.querySelectorAll(".nav-links a, .mobile-menu a");
+const sectionIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + entry.target.id));
+    }
+  });
+}, { rootMargin: "-40% 0px -55% 0px" });
+sections.forEach(s => sectionIO.observe(s));
+  </script>
+</body>
+</html>
